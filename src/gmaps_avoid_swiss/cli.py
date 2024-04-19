@@ -11,10 +11,8 @@ console = Console()
 @app.command()
 def main():
     """Console script for gmaps_avoid_swiss."""
-    console.print("Replace this message by putting your code into "
-               "gmaps_avoid_swiss.cli.main")
-    console.print("See Typer documentation at https://typer.tiangolo.com/")
-    
+    message = gmaps_avoid_swiss.hello_world()
+    console.print(message)
 
 
 if __name__ == "__main__":
