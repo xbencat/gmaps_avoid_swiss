@@ -5,14 +5,11 @@
 import pytest
 
 
-from gmaps_avoid_swiss import gmaps_avoid_swiss
-
-
 @pytest.fixture
 def response():
     """Sample pytest fixture.
 
-    See more at: http://doc.pytest.org/en/latest/fixture.html
+    See more at: https://doc.pytest.org/en/latest/fixture.html
     """
     # import requests
     # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
