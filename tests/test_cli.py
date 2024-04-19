@@ -8,7 +8,7 @@ class TestCLI(unittest.TestCase):
     def setUp(self):
         self.runner = CliRunner()
 
-    @patch('gmaps_avoid_swiss.gmaps_avoid_swiss.GMapsRoutingClient.compute_route')
+    @patch('gmaps_avoid_swiss.client.GMapsRoutingClient.compute_route')
     def test_cli_compute_route(self, mock_compute_route):
         mock_compute_route.return_value = unittest.mock.Mock(routes=[unittest.mock.Mock()])
 

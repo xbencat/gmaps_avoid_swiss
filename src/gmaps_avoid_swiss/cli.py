@@ -2,7 +2,7 @@
 """Console script for gmaps_avoid_swiss."""
 import typer
 from rich.console import Console
-from .gmaps_avoid_swiss import GMapsRoutingClient
+from src.gmaps_avoid_swiss import GMapsRoutingClient
 
 app = typer.Typer()
 console = Console()
