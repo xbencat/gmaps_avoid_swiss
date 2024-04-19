@@ -1,21 +1,22 @@
-#!/usr/bin/env python
+import unittest
 
-"""Tests for `gmaps_avoid_swiss` package."""
-
-import pytest
-
-
-@pytest.fixture
-def response():
-    """Sample pytest fixture.
-
-    See more at: https://doc.pytest.org/en/latest/fixture.html
-    """
-    # import requests
-    # return requests.get('https://github.com/audreyr/cookiecutter-pypackage')
+from unittest.mock import patch
+from src.gmaps_avoid_swiss.gmaps_avoid_swiss import GMapsRoutingClient
 
 
-def test_content(response):
-    """Sample pytest test function with the pytest fixture as an argument."""
-    # from bs4 import BeautifulSoup
-    # assert 'GitHub' in BeautifulSoup(response.content).title.string
+class TestGMapsRoutingClient(unittest.TestCase):
+
+    @patch('src.gmaps_avoid_swiss.gmaps_avoid_swiss.routing_v2.RoutesClient')
+    def test_compute_route(self, mock_routes_client):
+        mock_response = unittest.mock.Mock()
+        mock_response.routes = [unittest.mock.Mock(distance_meters=1000, duration=unittest.mock.Mock(seconds=3600))]
+        mock_routes_client.return_value.compute_routes.return_value = mock_response
+
+        client = GMapsRoutingClient("api_key")
+        origin = {"address": "New York, NY, USA"}
+        destination = {"address": "New Jersey, NJ, USA"}
+        response = client.compute_route(origin, destination)
+
+        self.assertTrue(response.routes)
+        self.assertGreater(response.routes[0].distance_meters, 0)
+        self.assertGreater(response.routes[0].duration.seconds, 0)

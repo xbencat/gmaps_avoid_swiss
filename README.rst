@@ -19,11 +19,16 @@ A Python package that customizes Google Maps routing to avoid Swiss routes unles
 * Free software: MIT license
 * Documentation: https://gmaps-avoid-swiss.readthedocs.io.
 
+TODO
+--------
+
+* variable fieldsets
+* avoid switz :D
 
 Features
 --------
 
-* TODO
+* calculates duration, transit time and encoded path from origin to destination
 
 Credits
 -------
