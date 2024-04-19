@@ -64,6 +64,4 @@ allow_untyped_defs = true
 disable_error_code = "attr-defined"
 
 [tool.pytest.ini_options]
-pythonpath = [
-  "gmaps_avoid_swiss", "gmaps_avoid_swiss/src",
-]
+pythonpath = ["src"]
