@@ -1,6 +1,6 @@
 import unittest
 from google.maps.routing_v2.types import Waypoint
-from src.gmaps_avoid_swiss.waypoints import create_waypoint, _create_waypoint_from_coordinates, \
+from gmaps_avoid_swiss.waypoints import create_waypoint, _create_waypoint_from_coordinates, \
     _create_waypoint_from_place_id, _create_waypoint_from_address
 
 

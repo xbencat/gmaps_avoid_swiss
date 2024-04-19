@@ -1,12 +1,12 @@
 import unittest
 
 from unittest.mock import patch
-from src.gmaps_avoid_swiss.gmaps_avoid_swiss import GMapsRoutingClient
+from gmaps_avoid_swiss.client import GMapsRoutingClient
 
 
 class TestGMapsRoutingClient(unittest.TestCase):
 
-    @patch('src.gmaps_avoid_swiss.gmaps_avoid_swiss.routing_v2.RoutesClient')
+    @patch('gmaps_avoid_swiss.gmaps_avoid_swiss.routing_v2.RoutesClient')
     def test_compute_route(self, mock_routes_client):
         mock_response = unittest.mock.Mock()
         mock_response.routes = [unittest.mock.Mock(distance_meters=1000, duration=unittest.mock.Mock(seconds=3600))]

@@ -2,7 +2,7 @@ from google.maps import routing_v2
 from google.maps.routing_v2.types import ComputeRoutesRequest
 from google.api_core.client_options import ClientOptions
 
-from src.gmaps_avoid_swiss.waypoints import create_waypoint
+from gmaps_avoid_swiss.waypoints import create_waypoint
 
 
 class GMapsRoutingClient:
