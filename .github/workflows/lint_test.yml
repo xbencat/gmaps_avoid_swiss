@@ -14,7 +14,7 @@ jobs:
     - name: Install Ruff
       run: pip install ruff
     - name: Run Ruff Linter
-      run: ruff check . --config .ruff.toml
+      run: ruff check . --config ruff.toml
 
   test:
     needs: lint
