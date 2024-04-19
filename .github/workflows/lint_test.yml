@@ -1,0 +1,41 @@
+name: Lint and Test
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+    - name: Install Ruff
+      run: pip install ruff
+    - name: Run Ruff Linter
+      run: ruff check . --config .ruff.toml
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10", "3.11"]
+    steps:
+    - uses: szenius/set-timezone@v1.2
+      with:
+        timezoneLinux: "Europe/Berlin"
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        pip install pytest pytest-md pytest-emoji
+    - uses: pavelzw/pytest-action@v2
+      with:
+        emoji: true
+        verbose: false
+        job-summary: true
