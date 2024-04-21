@@ -24,7 +24,7 @@ Dependencies
 ____________
 
 This package requires the GEOS library as it utilizes Shapely for geographic operations.
-For installation instructions and more details, please refer to our GEOS for more details.
+For installation instructions and more details, please refer to our `Geos <geos.html>`_ page for more details.
 
 
 Features
@@ -50,3 +50,4 @@ Credits
 This package was created with Cookiecutter_ .
 
 .. _Cookiecutter: https://github.com/audreyr/cookiecutter
+.. _geos:
