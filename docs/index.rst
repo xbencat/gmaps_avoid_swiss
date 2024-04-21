@@ -1,5 +1,5 @@
 Welcome to GMaps Avoid Swiss Routes's documentation!
-======================================
+====================================================
 
 .. toctree::
    :maxdepth: 2
@@ -9,6 +9,7 @@ Welcome to GMaps Avoid Swiss Routes's documentation!
    installation
    usage
    modules
+   geos
    contributing
    authors
    history

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gmaps_avoid_swiss"
-version = "0.1.4"
+version = "0.1.5"
 description = "A Python package that customizes Google Maps routing to avoid Swiss routes unless the origin, destination, or waypoints include locations within Switzerland."
 readme = "README.rst"
 authors = [
@@ -19,8 +19,9 @@ classifiers = [
 license = {text = "MIT license"}
 dependencies = [
   "google-maps-routing",
-  "typer",
-  "rich"
+  "numpy",
+  "shapely",
+  "polyline"
 ]
 
 [project.optional-dependencies]

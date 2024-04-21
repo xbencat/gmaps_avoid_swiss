@@ -6,41 +6,43 @@ def create_waypoint(location_data: dict) -> Waypoint:
     """
     Create a Waypoint object from the provided location data.
 
-    Args:
-        location_data (dict): A dictionary containing location information.
-            It should have one of the following keys:
-            - 'lat' and 'lng' for latitude and longitude coordinates
-            - 'place_id' for a Google Maps place ID
-            - 'address' for a textual address
+    :param location_data: A dictionary containing location information. It should have one of the following keys:
+        - 'lat' and 'lng' for latitude and longitude coordinates
+        - 'place_id' for a Google Maps place ID
+        - 'address' for a textual address
+    :type location_data: dict
 
-    Returns:
-        Waypoint: A Waypoint object created from the location data.
+    :return: A Waypoint object created from the location data.
+    :rtype: Waypoint
 
-    Raises:
-        ValueError: If the provided location data is invalid.
+    :raises ValueError: If the provided location data is invalid.
     """
     if 'lat' in location_data and 'lng' in location_data:
         return _create_waypoint_from_coordinates(
             location_data['lat'], location_data['lng']
         )
-    elif 'place_id' in location_data:
-        return _create_waypoint_from_place_id(location_data['place_id'])
-    elif 'address' in location_data:
-        return _create_waypoint_from_address(location_data['address'])
     else:
-        raise ValueError("Invalid location data provided")
+        raise ValueError("Currently, only latitude and longitude coordinates are accepted. "
+                         "Please provide a dictionary with 'lat' and 'lng' keys.")
+    # elif 'place_id' in location_data:
+    #     return _create_waypoint_from_place_id(location_data['place_id'])
+    # elif 'address' in location_data:
+    #     return _create_waypoint_from_address(location_data['address'])
+    # else:
+    #     raise ValueError("Invalid location data provided")
 
 
 def _create_waypoint_from_coordinates(latitude: float, longitude: float) -> Waypoint:
     """
     Create a Waypoint object from latitude and longitude coordinates.
 
-    Args:
-        latitude (float): The latitude coordinate.
-        longitude (float): The longitude coordinate.
+    :param latitude: The latitude coordinate.
+    :type latitude: float
+    :param longitude: The longitude coordinate.
+    :type longitude: float
 
-    Returns:
-        Waypoint: A Waypoint object created from the coordinates.
+    :return: A Waypoint object created from the coordinates.
+    :rtype: Waypoint
     """
     lat_lng = latlng_pb2.LatLng(latitude=latitude, longitude=longitude)
     location = Location(lat_lng=lat_lng)
@@ -51,11 +53,11 @@ def _create_waypoint_from_place_id(place_id: str) -> Waypoint:
     """
     Create a Waypoint object from a Google Maps place ID.
 
-    Args:
-        place_id (str): The Google Maps place ID.
+    :param place_id: The Google Maps place ID.
+    :type place_id: str
 
-    Returns:
-        Waypoint: A Waypoint object created from the place ID.
+    :return: A Waypoint object created from the place ID.
+    :rtype: Waypoint
     """
     return Waypoint(place_id=place_id)
 
@@ -64,10 +66,10 @@ def _create_waypoint_from_address(address: str) -> Waypoint:
     """
     Create a Waypoint object from a textual address.
 
-    Args:
-        address (str): The textual address.
+    :param address: The textual address.
+    :type address: str
 
-    Returns:
-        Waypoint: A Waypoint object created from the address.
+    :return: A Waypoint object created from the address.
+    :rtype: Waypoint
     """
     return Waypoint(address=address)

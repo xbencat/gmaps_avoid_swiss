@@ -19,16 +19,30 @@ A Python package that customizes Google Maps routing to avoid Swiss routes unles
 * Free software: MIT license
 * Documentation: https://gmaps-avoid-swiss.readthedocs.io.
 
-TODO
---------
 
-* variable fieldsets
-* avoid switz :D
+Dependencies
+____________
+
+This package requires the GEOS library as it utilizes Shapely for geographic operations.
+For installation instructions and more details, please refer to our GEOS for more details.
+
 
 Features
 --------
 
-* calculates duration, transit time and encoded path from origin to destination
+* Calculates duration, transit time, and encoded path from origin to destination
+* Avoids routing through Switzerland by dynamically selecting alternative cities
+  - If the initial route intersects with Switzerland, the system optimizes the route by selecting intermediate cities to avoid crossing Swiss borders
+  - The cities are prioritized based on their proximity to the intersection points with Switzerland
+  - The system iteratively tries different cities until a route that doesn't pass through Switzerland is found
+  - If no valid route is found after exhausting all city options, the system falls back to the original route
+* Right now its only possible to use address in format :code:`{"lat": 48.5734, "lng": 7.7521}`
+
+To-Do List
+----------
+
+* Add opting out of avoiding Swiss.
+* Improve Swiss route avoidance algorithms.
 
 Credits
 -------

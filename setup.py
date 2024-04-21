@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='gmaps_avoid_swiss',
-    version='0.1.4',
+    version='0.1.5',
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     url='https://github.com/xbencat/gmaps_avoid_swiss',
@@ -11,9 +11,10 @@ setup(
     author_email='bencat.gregor@gmail.com',
     description='A Python package that customizes Google Maps routing to avoid Swiss routes.',
     install_requires=[
-        'typer~=0.12.3',
-        'rich~=13.7.1',
         'google-maps-routing~=0.6.8',
+        'numpy~=1.21.2',
+        'shapely~=1.6.0',
+        'polyline~=1.4',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
