@@ -2,7 +2,45 @@
 Usage
 =====
 
-To use GMaps Avoid Swiss Routes in a project::
+Including Extra Fields
+----------------------
+
+To request specific extra fields in the response, list them in the ``extra_fields`` in ``compute_route()`` parameter using dot notation. Here are examples of how to include detailed nested fields:
+
+- To include the token for the route: ``['routes.routeToken']``
+- To include the encoded polyline: ``['routes.polyline.encodedPolyline']``
+- Both: ``['routes.polyline.encodedPolyline', 'routes.routeToken']``
+
+By default, these will be in the response always, unless you override them in route handler
+``['routes.distanceMeters', 'routes.duration', 'routes.polyline.encodedPolyline']``
+
+This notation allows users to specify precise components of the structured data they wish to include in the API response.
+
+For all the possible fields, check out official google documentation:
+
+https://developers.google.com/maps/documentation/routes_preferred/reference/rest/Shared.Types/ComputeRoutesResponse
+
+Response Example
+----------------
+
+Response::
+
+      routes {
+        distance_meters: 869010
+        duration {
+          seconds: 36653
+        }
+        polyline {
+          encoded_polyline: "gangH}ain@_Au@Sa@Kw@"
+        }
+      }
+
+
+
+Simple Example
+--------------
+To use GMaps Avoid Swiss Routes in a project try this::
+
 
 
     import time

@@ -32,6 +32,7 @@ class RoutesHandler:
         """
         Compute the route from origin to destination with customizable response fields.
         Extends the default fields with any extra fields specified for this particular call.
+        For detailed information on all available extra fields, refer to the corresponding section in the user guide.
 
         :param origin: A dictionary containing the origin location data.
         :type origin: dict

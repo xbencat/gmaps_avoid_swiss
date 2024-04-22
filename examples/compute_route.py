@@ -10,7 +10,7 @@ def compute_route(api_key, origin_data, destination_data):
         client = GMapsRoutingClient(api_key)
         routes_handler = RoutesHandler(client)
         response = routes_handler.compute_route(origin_data, destination_data)
-        print(response.routes[0].duration)
+        print(response.routes[0].distance_meters)
     except Exception as e:
         print(f"An error occurred: {e}")
 
