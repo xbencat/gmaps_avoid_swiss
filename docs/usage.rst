@@ -18,7 +18,7 @@ This notation allows users to specify precise components of the structured data 
 
 For all the possible fields, check out official google documentation:
 
-https://developers.google.com/maps/documentation/routes_preferred/reference/rest/Shared.Types/ComputeRoutesResponse
+https://developers.google.com/maps/documentation/routes/reference/rest/v2/TopLevel/computeRoutes#response-body
 
 Response Example
 ----------------
