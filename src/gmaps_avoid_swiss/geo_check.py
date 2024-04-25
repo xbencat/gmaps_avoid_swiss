@@ -1,8 +1,10 @@
 import json
 from importlib import resources
+from typing import Union
 
 from google.maps.routing_v2 import Polyline
 from polyline import polyline
+from shapely import MultiLineString
 from shapely.geometry import shape, Point, Polygon, LineString
 
 
@@ -55,7 +57,7 @@ class GeographicChecker:
 
         return self.swiss_polygon.intersection(route_linestring)
 
-    def sort_cities_by_distance(self, intersection: LineString):
+    def sort_cities_by_distance(self, intersection: Union[LineString, MultiLineString]):
         """
         Sort the cities based on their total distance to the start and end points of the intersection with Switzerland.
 
@@ -65,8 +67,14 @@ class GeographicChecker:
 
         self.cities.clear()
 
-        start = Point(intersection.coords[0])  # start of intersection
-        end = Point(intersection.coords[-1])  # end of intersection
+        if isinstance(intersection, LineString):
+            start = Point(intersection.coords[0])  # Start of LineString
+            end = Point(intersection.coords[-1])  # End of LineString
+        elif isinstance(intersection, MultiLineString):
+            start = Point(intersection.geoms[0].coords[0])  # First point of the first LineString
+            end = Point(intersection.geoms[-1].coords[-1])  # Last point of the last LineString
+        else:
+            raise TypeError("Unsupported geometry type for intersection")
 
         for city in [self.INNSBRUCK, self.LION, self.BEAUNE]:
             city_point = Point(city['lng'], city['lat'])
