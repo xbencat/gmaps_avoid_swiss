@@ -17,8 +17,11 @@ def main():
 
     # origin_data = {"lat": 48.5734, "lng": 7.7521}  # Strasbourg
     # destination_data = {"lat": 45.4637, "lng": 9.1885}
-    origin_data = {'lat': 48.1485965, 'lng': 17.1077477}
-    destination_data = {'lat': 41.3874, 'lng': 2.1686}
+    # origin_data = {'lat': 48.1485965, 'lng': 17.1077477}
+    # destination_data = {'lat': 41.3874, 'lng': 2.1686}
+
+    origin_data = {'lat': 39.4699, 'lng': 0.3763}
+    destination_data = {'lat': 48.6217, 'lng': 17.7232}
 
     start_time = time.perf_counter()
     compute_route(api_key, origin_data, destination_data)

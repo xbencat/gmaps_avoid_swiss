@@ -53,7 +53,10 @@ class RoutesHandler:
         route_fields = self._merge_fields(extra_fields)
         field_mask = ",".join(route_fields)
 
-        request = ComputeRoutesRequest(origin=origin_waypoint, destination=destination_waypoint)
+        request = ComputeRoutesRequest(
+            origin=origin_waypoint,
+            destination=destination_waypoint,
+        )
 
         if self._is_any_location_inside_swiss([origin, destination]):
             return self._perform_route_computation(request, field_mask)
@@ -114,7 +117,7 @@ class RoutesHandler:
                                      field_mask: str) -> routing_v2.ComputeRoutesResponse:
         """
         Handle routing when both locations are outside Switzerland but need to check if the route goes through
-        Switzerland.
+        Switzerland. If it does, we try alternative routes first, then reroute via common cities.
 
         :param request: The ComputeRoutesRequest object.
         :type request: ComputeRoutesRequest
@@ -128,8 +131,14 @@ class RoutesHandler:
         intersection = self.geo_checker.does_route_cross_swiss(response.routes[0].polyline)
 
         if intersection:
+            alternative_response = self._try_alternative_routes(request, field_mask)
+
+            if alternative_response:
+                return alternative_response
+
             self.geo_checker.sort_cities_by_distance(intersection)
             response = self._reroute_route(request, field_mask)
+
         return response
 
     def _reroute_route(self, request: ComputeRoutesRequest, field_mask: str) -> routing_v2.ComputeRoutesResponse:
@@ -174,7 +183,30 @@ class RoutesHandler:
         updated_request = ComputeRoutesRequest(
             origin=request.origin,
             destination=request.destination,
-            intermediates=[via]
+            intermediates=[via],
         )
 
         return updated_request
+
+    def _try_alternative_routes(self, request: ComputeRoutesRequest,
+                                field_mask: str) -> routing_v2.ComputeRoutesResponse | None:
+        """
+        Try computing alternative routes to see if any avoid crossing Switzerland.
+
+        :param request: The ComputeRoutesRequest object.
+        :type request: ComputeRoutesRequest
+        :param field_mask: Field mask for the Google Maps Routing API.
+        :type field_mask: str
+        :return: The response from the routing API, if a valid alternative is found.
+        :rtype: routing_v2.ComputeRoutesResponse
+        """
+        request.compute_alternative_routes = True
+
+        response = self._perform_route_computation(request, field_mask)
+        for route in response.routes:
+            if not self.geo_checker.does_route_cross_swiss(route.polyline):
+                valid_response = routing_v2.ComputeRoutesResponse()
+                valid_response.routes.append(route)
+                return valid_response
+
+        return None

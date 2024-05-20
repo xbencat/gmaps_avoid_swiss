@@ -2,7 +2,7 @@
 
 __author__ = """Gregor Bencat"""
 __email__ = 'bencat.gregor@gmail.com'
-__version__ = '0.1.8'
+__version__ = '0.1.9'
 
 from gmaps_avoid_swiss.client import GMapsRoutingClient
 from gmaps_avoid_swiss.routes import RoutesHandler

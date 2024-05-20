@@ -31,8 +31,8 @@ Features
 --------
 
 * Calculates duration, transit time, and encoded path from origin to destination
-* Avoids routing through Switzerland by dynamically selecting alternative cities
-  - If the initial route intersects with Switzerland, the system optimizes the route by selecting intermediate cities to avoid crossing Swiss borders
+* Avoids routing through Switzerland by trying alternative routes or dynamically selecting alternative cities
+  - If the initial route or alternative routes intersects with Switzerland, the system optimizes the route by selecting intermediate cities to avoid crossing Swiss borders
   - The cities are prioritized based on their proximity to the intersection points with Switzerland
   - The system iteratively tries different cities until a route that doesn't pass through Switzerland is found
   - If no valid route is found after exhausting all city options, the system falls back to the original route
