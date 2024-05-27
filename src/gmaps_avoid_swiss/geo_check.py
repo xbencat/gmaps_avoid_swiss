@@ -12,6 +12,7 @@ class GeographicChecker:
     INNSBRUCK = {"lat": 47.2692, "lng": 11.4041}
     LION = {"lat": 45.7640, "lng": 4.8357}
     BEAUNE = {"lat": 47.0260, "lng": 4.8400}
+    FREIBURG = {"lat": 47.9990, "lng": 7.8421}
 
     def __init__(self):
         """
@@ -76,7 +77,7 @@ class GeographicChecker:
         else:
             raise TypeError("Unsupported geometry type for intersection")
 
-        for city in [self.INNSBRUCK, self.LION, self.BEAUNE]:
+        for city in [self.INNSBRUCK, self.LION, self.BEAUNE, self.FREIBURG]:
             city_point = Point(city['lng'], city['lat'])
 
             distance_to_start = start.distance(city_point)
