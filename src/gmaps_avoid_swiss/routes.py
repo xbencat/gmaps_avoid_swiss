@@ -1,5 +1,8 @@
 from google.maps import routing_v2
-from google.maps.routing_v2.types import ComputeRoutesRequest
+from google.maps.routing_v2.types import (
+    ComputeRoutesRequest,
+    RouteModifiers,
+)
 from gmaps_avoid_swiss.client import GMapsRoutingClient
 from gmaps_avoid_swiss.geo_check import GeographicChecker
 from gmaps_avoid_swiss.waypoints import create_waypoint
@@ -27,12 +30,20 @@ class RoutesHandler:
             default_fields = ['routes.distanceMeters', 'routes.duration', 'routes.polyline.encodedPolyline']
         self.default_fields = default_fields
 
-    def compute_route(self, origin: dict, destination: dict,
-                      extra_fields: list = None) -> routing_v2.ComputeRoutesResponse:
+    def compute_route(
+        self,
+        origin: dict,
+        destination: dict,
+        extra_fields: list = None,
+        avoid_ferries: bool = False,
+        avoid_tolls: bool = False,
+        avoid_highways: bool = False,
+    ) -> routing_v2.ComputeRoutesResponse:
         """
         Compute the route from origin to destination with customizable response fields.
         Extends the default fields with any extra fields specified for this particular call.
-        For detailed information on all available extra fields, refer to the corresponding section in the user guide.
+        For detailed information on all available extra fields, refer to the corresponding section
+        in the user guide.
 
         :param origin: A dictionary containing the origin location data.
         :type origin: dict
@@ -40,10 +51,14 @@ class RoutesHandler:
         :type destination: dict
         :param extra_fields: Additional fields to include in the response, in addition to default fields.
         :type extra_fields: list, optional
-
+        :param avoid_ferries: Whether to avoid ferries in the computed route.
+        :type avoid_ferries: bool
+        :param avoid_tolls: Whether to avoid toll roads.
+        :type avoid_tolls: bool
+        :param avoid_highways: Whether to avoid highways.
+        :type avoid_highways: bool
         :return: The response containing the computed routes.
         :rtype: routing_v2.ComputeRoutesResponse
-
         :raises Exception: If there is an error while computing the routes.
         """
 
@@ -56,6 +71,11 @@ class RoutesHandler:
         request = ComputeRoutesRequest(
             origin=origin_waypoint,
             destination=destination_waypoint,
+            route_modifiers=RouteModifiers(
+                avoid_ferries=avoid_ferries,
+                avoid_tolls=avoid_tolls,
+                avoid_highways=avoid_highways
+            ),
         )
 
         if self._is_any_location_inside_swiss([origin, destination]):
@@ -122,7 +142,7 @@ class RoutesHandler:
         :param request: The ComputeRoutesRequest object.
         :type request: ComputeRoutesRequest
         :param field_mask: Field mask for the Google Maps Routing API.
-        :type field_mask: str
+        :type field_mask: Str
         :return: The response from the routing API.
         :rtype: routing_v2.ComputeRoutesResponse
         """
@@ -148,7 +168,7 @@ class RoutesHandler:
         :param request: The ComputeRoutesRequest object containing the origin and destination.
         :type request: ComputeRoutesRequest
         :param field_mask: Field mask for the Google Maps Routing API.
-        :type field_mask: str
+        :type field_mask: Str
         :return: The response from the routing API with the rerouted request, or the original response if no valid
                 alternative is found.
         :rtype: routing_v2.ComputeRoutesResponse
